@@ -44,9 +44,9 @@ export default function DeliverablesPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Deliverables</h2>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {["ALL", "PENDING", "IN_PROGRESS", "COMPLETED", "OVERDUE"].map(s => (
             <button key={s} onClick={() => setFilter(s)}
               className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
@@ -67,8 +67,8 @@ export default function DeliverablesPage() {
           <p className="text-gray-400 text-sm mt-1">Add deliverables from inside a deal</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-          <table className="w-full">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-x-auto">
+          <table className="w-full min-w-[600px]">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
                 <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Title</th>

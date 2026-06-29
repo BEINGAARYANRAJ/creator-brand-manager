@@ -31,7 +31,7 @@ export default function OverviewPage() {
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Overview</h2>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {cards.map(card => {
           const Icon = card.icon;
           return (
@@ -50,7 +50,7 @@ export default function OverviewPage() {
 
       {/* Upcoming Deadlines */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-        <h3 className="text-sm font-semibold text-gray-700 mb-4">Upcoming Deadlines</h3>
+             <h3 className="text-sm font-semibold text-gray-700 mb-4">Upcoming Deadlines</h3>
         {upcomingDeadlines.length === 0 ? (
           <p className="text-sm text-gray-400 text-center py-6">No upcoming deadlines</p>
         ) : (

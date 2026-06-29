@@ -45,7 +45,7 @@ export default function UsageRightsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Usage Rights</h2>
         <button onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
@@ -53,11 +53,10 @@ export default function UsageRightsPage() {
         </button>
       </div>
 
-      {/* Add Form */}
       {showForm && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-6">
           <h3 className="text-sm font-semibold text-gray-700 mb-4">New Usage Right</h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-xs text-gray-500 mb-1 block">Deal</label>
               <select value={form.dealId} onChange={e => setForm({ ...form, dealId: e.target.value })}
@@ -93,13 +92,13 @@ export default function UsageRightsPage() {
               <input type="date" value={form.expiresAt} onChange={e => setForm({ ...form, expiresAt: e.target.value })}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-1 sm:col-span-2">
               <label className="text-xs text-gray-500 mb-1 block">Notes</label>
               <input type="text" value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })}
                 placeholder="Any additional notes..."
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm" />
             </div>
-            <div className="col-span-2 flex items-center gap-2">
+            <div className="col-span-1 sm:col-span-2 flex items-center gap-2">
               <input type="checkbox" id="exclusivity" checked={form.exclusivity}
                 onChange={e => setForm({ ...form, exclusivity: e.target.checked })}
                 className="rounded" />
@@ -128,8 +127,8 @@ export default function UsageRightsPage() {
           <p className="text-gray-400 text-sm mt-1">Add usage rights from your deals</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-          <table className="w-full">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-x-auto">
+          <table className="w-full min-w-[550px]">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
                 <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Deal</th>

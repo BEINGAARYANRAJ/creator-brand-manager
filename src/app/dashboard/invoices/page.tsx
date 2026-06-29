@@ -44,9 +44,9 @@ export default function InvoicesPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Invoices</h2>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {["ALL", "UNPAID", "PAID", "OVERDUE"].map(s => (
             <button key={s} onClick={() => setFilter(s)}
               className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
@@ -58,7 +58,6 @@ export default function InvoicesPage() {
         </div>
       </div>
 
-      {/* Summary cards */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
           <p className="text-xs text-gray-400 mb-1">Unpaid</p>
@@ -79,8 +78,8 @@ export default function InvoicesPage() {
           <p className="text-gray-400 text-sm mt-1">Add invoices from inside a deal</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-          <table className="w-full">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-x-auto">
+          <table className="w-full min-w-[550px]">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
                 <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Deal</th>
