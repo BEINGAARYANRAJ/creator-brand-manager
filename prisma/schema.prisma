@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String      @id @default(cuid())
+  clerkId   String      @unique
+  email     String      @unique
+  name      String?
+  createdAt DateTime    @default(now())
+  deals     BrandDeal[]
+}
+
+model BrandDeal {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  brandName    String
+  platform     String
+  dealValue    Float
+  currency     String        @default("USD")
+  status       DealStatus    @default(NEGOTIATING)
+  startDate    DateTime?
+  endDate      DateTime?
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  deliverables Deliverable[]
+  invoices     Invoice[]
+  usageRights  UsageRight[]
+}
+
+model Deliverable {
+  id                 String            @id @default(cuid())
+  dealId             String
+  deal               BrandDeal         @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  title              String
+  type               String
+  dueDate            DateTime?
+  status             DeliverableStatus @default(PENDING)
+  notes              String?
+  lastReminderSentAt DateTime?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+model Invoice {
+  id                 String        @id @default(cuid())
+  dealId             String
+  deal               BrandDeal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  amount             Float
+  currency           String        @default("USD")
+  issuedDate         DateTime      @default(now())
+  dueDate            DateTime?
+  paidAt             DateTime?
+  status             InvoiceStatus @default(UNPAID)
+  notes              String?
+  lastReminderSentAt DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+model UsageRight {
+  id          String    @id @default(cuid())
+  dealId      String
+  deal        BrandDeal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  platform    String
+  duration    String
+  exclusivity Boolean   @default(false)
+  expiresAt   DateTime?
+  notes       String?
+  createdAt   DateTime  @default(now())
+}
+
+enum DealStatus {
+  NEGOTIATING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum DeliverableStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  OVERDUE
+}
+
+enum InvoiceStatus {
+  UNPAID
+  PAID
+  OVERDUE
+}
