@@ -20,8 +20,8 @@ export default function OverviewPage() {
   const cards = [
     { label: "Total Deals", value: stats.totalDeals, icon: Briefcase, color: "text-violet-600", bg: "bg-violet-50" },
     { label: "Active Deals", value: stats.activeDeals, icon: TrendingUp, color: "text-blue-600", bg: "bg-blue-50" },
-    { label: "Revenue Collected", value: `$${stats.totalRevenue.toLocaleString()}`, icon: DollarSign, color: "text-emerald-600", bg: "bg-emerald-50" },
-    { label: "Pending Payment", value: `$${stats.pendingRevenue.toLocaleString()}`, icon: Clock, color: "text-amber-600", bg: "bg-amber-50" },
+   { label: "Revenue Collected", value: stats.totalRevenue, icon: DollarSign, color: "text-emerald-600", bg: "bg-emerald-50" },
+  { label: "Pending Payment", value: stats.pendingRevenue, icon: Clock, color: "text-amber-600", bg: "bg-amber-50" },
     { label: "Completed Deals", value: stats.completedDeals, icon: CheckCircle, color: "text-green-600", bg: "bg-green-50" },
     { label: "Pending Deliverables", value: stats.pendingDeliverables, icon: AlertCircle, color: "text-red-500", bg: "bg-red-50" },
   ];

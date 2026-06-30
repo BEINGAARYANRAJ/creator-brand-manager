@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FileText } from "lucide-react";
+import { FileText,FileDown} from "lucide-react";
 
 const STATUS_COLORS: Record<string, string> = {
   UNPAID: "bg-amber-100 text-amber-700",
@@ -79,14 +79,14 @@ export default function InvoicesPage() {
         </div>
       ) : (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-x-auto">
-          <table className="w-full min-w-[550px]">
+          <table className="w-full min-w-[600px]">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50">
                 <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Deal</th>
                 <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Amount</th>
                 <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Due Date</th>
                 <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Status</th>
-                <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Action</th>
+                <th className="text-left text-xs font-medium text-gray-500 px-5 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -105,12 +105,18 @@ export default function InvoicesPage() {
                     </span>
                   </td>
                   <td className="px-5 py-3">
-                    {inv.status !== "PAID" && (
-                      <button onClick={() => markPaid(inv.id)}
-                        className="text-xs text-emerald-600 hover:text-emerald-800 font-medium">
-                        Mark Paid
-                      </button>
-                    )}
+                    <div className="flex items-center gap-3">
+                      {inv.status !== "PAID" && (
+                        <button onClick={() => markPaid(inv.id)}
+                          className="text-xs text-emerald-600 hover:text-emerald-800 font-medium">
+                          Mark Paid
+                        </button>
+                      )}
+                      <a href={`/api/invoices/${inv.id}/pdf`} target="_blank"
+                        className="text-xs text-violet-600 hover:text-violet-800 font-medium">
+                        Download
+                      </a>
+                    </div>
                   </td>
                 </tr>
               ))}

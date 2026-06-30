@@ -9,15 +9,17 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const dealId = searchParams.get("dealId");
 
+  const user = await prisma.user.findUnique({ where: { clerkId: userId } });
+  if (!user) return NextResponse.json({ deliverables: [] });
+
   const deliverables = await prisma.deliverable.findMany({
     where: {
       ...(dealId ? { dealId } : {}),
-      deal: { userId },
+      deal: { userId: user.id },
     },
     include: { deal: { select: { brandName: true } } },
     orderBy: { dueDate: "asc" },
   });
-
   return NextResponse.json({ deliverables });
 }
 
@@ -28,8 +30,11 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { dealId, title, type, dueDate, notes } = body;
 
+  const user = await prisma.user.findUnique({ where: { clerkId: userId } });
+  if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
   const deal = await prisma.brandDeal.findFirst({
-    where: { id: dealId, userId },
+    where: { id: dealId, userId: user.id },
   });
   if (!deal) return NextResponse.json({ error: "Deal not found" }, { status: 404 });
 
@@ -42,7 +47,6 @@ export async function POST(req: Request) {
       notes,
     },
   });
-
   return NextResponse.json({ deliverable }, { status: 201 });
 }
 
@@ -53,14 +57,16 @@ export async function PATCH(req: Request) {
   const body = await req.json();
   const { id, ...data } = body;
 
+  const user = await prisma.user.findUnique({ where: { clerkId: userId } });
+  if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
   const deliverable = await prisma.deliverable.updateMany({
-    where: { id, deal: { userId } },
+    where: { id, deal: { userId: user.id } },
     data: {
       ...data,
       dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
     },
   });
-
   return NextResponse.json({ deliverable });
 }
 
@@ -71,9 +77,11 @@ export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 
-  await prisma.deliverable.deleteMany({
-    where: { id: id!, deal: { userId } },
-  });
+  const user = await prisma.user.findUnique({ where: { clerkId: userId } });
+  if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
+  await prisma.deliverable.deleteMany({
+    where: { id: id!, deal: { userId: user.id } },
+  });
   return NextResponse.json({ success: true });
 }

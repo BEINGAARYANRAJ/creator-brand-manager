@@ -17,6 +17,7 @@ export async function GET(req: Request) {
       dealId: dealId || undefined,
       deal: { userId: user.id },
     },
+    include: { deal: { select: { brandName: true } } },
     orderBy: { createdAt: "desc" },
   });
 
